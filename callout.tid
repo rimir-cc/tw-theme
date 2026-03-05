@@ -1,0 +1,18 @@
+created: 20260305110732194
+modified: 20260305110732194
+title: $:/plugins/rimir/theme/callout
+type: text/vnd.tiddlywiki
+
+\parameters (type:"info", label:"")
+
+<$let
+  calloutClass={{{ [[rr-callout rr-callout-]addsuffix<type>] }}}
+  resolvedLabel={{{ [<label>!is[blank]] :else[<type>uppercase[]] }}}
+>
+<div class=<<calloutClass>>>
+<div class="rr-callout-label"><$text text=<<resolvedLabel>>/></div>
+<$slot $name="body">
+//No callout content.//
+</$slot>
+</div>
+</$let>

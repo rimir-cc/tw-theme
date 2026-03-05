@@ -1,0 +1,41 @@
+created: 20260305110732195
+modified: 20260305110732195
+rdt.hub-category: infrastructure
+rdt.hub-category-name: Infrastructure
+rdt.hub-order: 2
+rdt.order: 1
+rdt.plugin-key: theme
+rdt.plugin-name: theme
+rdt.plugin-subtitle: Shared visual CSS classes for rimir plugins
+rdt.section: Overview
+title: $:/plugins/rimir/theme/doc/overview
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! What it does
+
+Theme provides a centralised set of CSS classes (prefix `rr-`) used across all rimir plugins. It eliminates duplicate styling by offering consistent patterns for tabs, panels, tables, callouts, notices, badges, forms, and the settings hub layout.
+
+!! Features
+
+* ''Tabs'' — `rr-tabs`, `rr-tab`, `rr-tab-active` for horizontal tab bars
+* ''Panels'' — bordered containers with padded content area
+* ''Tables'' — full-width collapsed tables with error/warning row styles
+* ''Callouts'' — four types (info, warning, tip, danger) via reusable template
+* ''Notices'' — alert banners (warning, info, danger, success)
+* ''Badges'' — circular and rectangular pill badges
+* ''Forms'' — styled inputs and flex row layout
+* ''Settings hub'' — sidebar + content layout for the core-hook settings panel
+* ''Utilities'' — muted, mono, nowrap, small helper classes
+
+!! Plugin files
+
+|!File |!Role |
+|`styles.tid` |All CSS definitions (`rr-*` prefix) |
+|`callout.tid` |Reusable callout box template |
+|`notice.tid` |Reusable notice banner template |
+
+</$fill>
+</$transclude>
