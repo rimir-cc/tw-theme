@@ -141,6 +141,14 @@ Use the template `$:/plugins/rimir/theme/notice` with parameter `type` (`warning
 | `rr-nowrap` | No text wrapping |
 | `rr-small` | 0.85em font size |
 
+## Plugin Library
+
+Install from the [rimir plugin library](https://rimir-cc.github.io/tw-plugin-library/) via *Control Panel → Plugins → Get more plugins*.
+
+## Demo
+
+Try this plugin in the [live demo wiki](https://rimir-cc.github.io/tw-demo/).
+
 ## License
 
 MIT -- see [LICENSE.md](LICENSE.md)
