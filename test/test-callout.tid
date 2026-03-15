@@ -1,0 +1,41 @@
+title: $:/plugins/rimir/theme/test/test-callout
+description: Test callout procedure renders correct structure with type and label
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+\procedure callout(type:"info", label:"")
+\whitespace trim
+<$let
+  calloutClass={{{ [[rr-callout rr-callout-]addsuffix<type>] }}}
+  resolvedLabel={{{ [<label>!is[blank]] :else[<type>uppercase[]] }}}
+>
+<div class=<<calloutClass>>>
+<div class="rr-callout-label"><$text text=<<resolvedLabel>>/></div>
+<$slot $name="body">
+Default content
+</$slot>
+</div>
+</$let>
+\end
+
+<$transclude $variable="callout" type="warn" label="Watch out">
+<$fill $name="body">
+Hello
+</$fill>
+</$transclude>
+<$transclude $variable="callout" type="info">
+<$fill $name="body">
+Info text
+</$fill>
+</$transclude>
++
+title: ExpectedResult
+
+<p><div class="rr-callout rr-callout-warn"><div class="rr-callout-label">Watch out</div>Hello</div><div class="rr-callout rr-callout-info"><div class="rr-callout-label">INFO</div>Info text</div></p>
++
+title: Narrative
+
+Verifies callout procedure renders div structure with correct CSS classes for type and label.

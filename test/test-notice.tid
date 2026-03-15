@@ -1,0 +1,37 @@
+title: $:/plugins/rimir/theme/test/test-notice
+description: Test notice procedure renders correct structure with type parameter
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+\procedure notice(type:"warning")
+\whitespace trim
+<$let noticeClass={{{ [[rr-notice rr-notice-]addsuffix<type>] }}}>
+<div class=<<noticeClass>>>
+<$slot $name="body">
+Default notice
+</$slot>
+</div>
+</$let>
+\end
+
+<$transclude $variable="notice" type="error">
+<$fill $name="body">
+Error occurred
+</$fill>
+</$transclude>
+<$transclude $variable="notice">
+<$fill $name="body">
+Default type
+</$fill>
+</$transclude>
++
+title: ExpectedResult
+
+<p><div class="rr-notice rr-notice-error">Error occurred</div><div class="rr-notice rr-notice-warning">Default type</div></p>
++
+title: Narrative
+
+Verifies notice procedure renders div structure with correct CSS classes for type parameter.
