@@ -1,0 +1,58 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 4
+rdt.plugin-key: theme
+rdt.plugin-name: theme
+rdt.plugin-subtitle: Shared visual CSS classes for rimir plugins
+rdt.section: Examples
+title: $:/plugins/rimir/theme/doc/examples
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Callout boxes
+
+```
+<$transclude $tiddler="$:/plugins/rimir/theme/callout" type="info">
+<$fill $name="body">This is an informational callout.</$fill>
+</$transclude>
+
+<$transclude $tiddler="$:/plugins/rimir/theme/callout" type="warning" label="Caution">
+<$fill $name="body">This callout has a custom label.</$fill>
+</$transclude>
+
+<$transclude $tiddler="$:/plugins/rimir/theme/callout" type="danger">
+<$fill $name="body">Danger callout for critical warnings.</$fill>
+</$transclude>
+
+<$transclude $tiddler="$:/plugins/rimir/theme/callout" type="tip">
+<$fill $name="body">A helpful tip for the reader.</$fill>
+</$transclude>
+```
+
+!! Tab bar
+
+```
+<div class="rr-tabs">
+  <$button class="rr-tab rr-tab-active" set="$:/state/demo-tab" setTo="one">Tab 1</$button>
+  <$button class="rr-tab" set="$:/state/demo-tab" setTo="two">Tab 2</$button>
+</div>
+<$reveal state="$:/state/demo-tab" type="match" text="one" default="one">
+Content for tab 1.
+</$reveal>
+<$reveal state="$:/state/demo-tab" type="match" text="two">
+Content for tab 2.
+</$reveal>
+```
+
+!! Notice banner
+
+```
+<$transclude $tiddler="$:/plugins/rimir/theme/notice" type="warning">
+<$fill $name="body">This feature is experimental.</$fill>
+</$transclude>
+```
+
+</$fill>
+</$transclude>

@@ -1,0 +1,42 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 7
+rdt.plugin-key: theme
+rdt.plugin-name: theme
+rdt.plugin-subtitle: Shared visual CSS classes for rimir plugins
+rdt.section: TW Internals
+title: $:/plugins/rimir/theme/doc/tw-internals
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! $:/tags/Stylesheet
+
+`styles.tid` is tagged `$:/tags/Stylesheet`. TiddlyWiki collects all tiddlers with this tag at startup and injects their text content as `<style>` elements in the page `<head>`. The CSS is wikified first, which is what allows `<<colour ...>>` macro expansion.
+
+!! <<colour>> macro
+
+TiddlyWiki's palette system provides the `<<colour name>>` macro, which resolves to a CSS color value from the active palette tiddler (e.g., `$:/palettes/Vanilla`). The theme stylesheet uses this for borders, backgrounds, and text colors to ensure visual consistency with the user's chosen palette.
+
+Key palette entries used:
+
+|!Macro |!Typical value |!Usage in theme |
+|`<<colour tiddler-border>>` |`#dbdbdb` |Tab borders, panel borders |
+|`<<colour page-background>>` |`#f4f4f4` |Tab bar background |
+|`<<colour muted-foreground>>` |`#999` |Inactive tabs, muted text |
+|`<<colour foreground>>` |`#333` |Active tab text |
+|`<<colour background>>` |`#fff` |Panel backgrounds |
+|`<<colour primary>>` |`#5778d8` |Active tab border, link buttons |
+|`<<colour alert-highlight>>` |`#ffe476` |Warning notices |
+
+!! $transclude with $fill
+
+The callout and notice templates use `\parameters` to declare their attributes, and `<$slot $name="body"/>` to insert consumer-provided content. Consumers use `<$transclude $tiddler="...">` with `<$fill $name="body">` to inject content. This creates a transclusion boundary that enables slot/fill matching.
+
+!! Stylesheet loading order
+
+TiddlyWiki loads stylesheet tiddlers in title-alphabetical order. The theme's `styles.tid` has title `$:/plugins/rimir/theme/styles`, which sorts after TW core styles. Plugin-specific styles in other rimir plugins sort after theme due to their longer title paths, so they can safely override theme classes with equal specificity.
+
+</$fill>
+</$transclude>

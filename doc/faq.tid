@@ -1,0 +1,27 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 5
+rdt.plugin-key: theme
+rdt.plugin-name: theme
+rdt.plugin-subtitle: Shared visual CSS classes for rimir plugins
+rdt.section: FAQ
+title: $:/plugins/rimir/theme/doc/faq
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Q: Do I need the theme plugin if I only use one rimir plugin?
+
+Yes, if that plugin uses `rr-` CSS classes (most do). Without theme, the UI will render but without proper styling — no borders, no spacing, no callout colors. Check the plugin's dependencies to confirm.
+
+!! Q: Will theme conflict with my custom TW palette?
+
+No. Theme uses TiddlyWiki's `<<colour ...>>` macros for most colors (borders, backgrounds, muted text), so it inherits your active palette automatically. Only semantic colors (callout borders, notice backgrounds) use hardcoded values.
+
+!! Q: How do I override a specific `rr-` class?
+
+Create a tiddler tagged `$:/tags/Stylesheet` with higher specificity or an `!important` rule. Since TW loads stylesheet tiddlers in alphabetical order by title, you can also use a title that sorts after the theme's `styles.tid` to ensure your overrides load later.
+
+</$fill>
+</$transclude>

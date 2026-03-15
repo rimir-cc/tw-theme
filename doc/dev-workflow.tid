@@ -1,0 +1,51 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 3
+rdt.plugin-key: theme
+rdt.plugin-name: theme
+rdt.plugin-subtitle: Shared visual CSS classes for rimir plugins
+rdt.section: Dev Workflow
+title: $:/plugins/rimir/theme/doc/dev-workflow
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Plugin files
+
+|!File |!Role |
+|`styles.tid` |All CSS definitions — tagged `$:/tags/Stylesheet` |
+|`callout.tid` |Reusable callout box template (info/warning/tip/danger) |
+|`notice.tid` |Reusable notice banner template (warning/info/danger/success) |
+|`settings.tid` |Settings panel (minimal — no configurable settings) |
+|`readme.tid` |Plugin readme with full class reference |
+|`icon.tid` |SVG icon |
+|`plugin.info` |Plugin metadata |
+
+!! Restart rules
+
+|!Change |!Restart needed? |
+|`styles.tid` |Yes — plugin shadow tiddler, requires server restart |
+|`callout.tid` / `notice.tid` |Yes — plugin shadow tiddlers |
+|Any doc/readme `.tid` |Yes — plugin shadow tiddlers |
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/callout" type="info">
+<$fill $name="body">
+Theme has no JS modules — all files are wikitext/CSS shadow tiddlers. "Restart" means restarting the TiddlyWiki server so updated shadow tiddlers are loaded.
+</$fill>
+</$transclude>
+
+!! Adding new classes
+
+When adding a new `rr-` class:
+
+# Add the CSS rule to `styles.tid` in the appropriate section (tabs, panels, tables, etc.)
+# Document the class in `readme.tid` under the relevant subsection
+# If the class is part of a reusable pattern (like callouts), consider creating a wikitext template
+
+!! Consuming plugins
+
+Other rimir plugins import theme classes by simply using `class="rr-..."` in their wikitext or by transclusing the callout/notice templates. No import statement or dependency declaration is needed beyond listing theme in `tiddlywiki.info`.
+
+</$fill>
+</$transclude>

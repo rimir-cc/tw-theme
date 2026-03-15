@@ -1,0 +1,40 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 2
+rdt.plugin-key: theme
+rdt.plugin-name: theme
+rdt.plugin-subtitle: Shared visual CSS classes for rimir plugins
+rdt.section: Architecture
+title: $:/plugins/rimir/theme/doc/architecture
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Single stylesheet
+
+All CSS is defined in `styles.tid`, tagged `$:/tags/Stylesheet`. TiddlyWiki loads all stylesheet-tagged tiddlers at startup and injects them into the page. The `rr-` prefix namespaces all classes to avoid collisions with TW core or other plugins.
+
+!! Reusable templates
+
+Two wikitext templates provide parameterized UI components:
+
+|!Template |!Tiddler |!Parameters |
+|Callout |`$:/plugins/rimir/theme/callout` |`type` (info/warning/tip/danger), optional `label` |
+|Notice |`$:/plugins/rimir/theme/notice` |`type` (warning/info/danger/success) |
+
+These are consumed via `<$transclude $tiddler="..." type="...">` with `<$fill $name="body">` for content injection.
+
+!! TW colour macros
+
+The stylesheet uses TiddlyWiki's `<<colour ...>>` macros (e.g., `<<colour tiddler-border>>`, `<<colour page-background>>`, `<<colour muted-foreground>>`) to inherit the active palette's colors. This means rimir plugins automatically adapt to custom TW palettes.
+
+!! Design principles
+
+* ''Single source'' — one `styles.tid` file, no scattered CSS across plugins
+* ''Prefix convention'' — all classes use `rr-` to avoid naming conflicts
+* ''Palette-aware'' — uses TW colour macros, not hardcoded colors (except for semantic callout/notice borders)
+* ''No JS'' — pure CSS + wikitext templates, no startup modules
+
+</$fill>
+</$transclude>
