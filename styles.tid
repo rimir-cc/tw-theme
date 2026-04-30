@@ -373,3 +373,8 @@ type: text/vnd.tiddlywiki
 .rr-text-editor-btn-hidden {
 	display: none;
 }
+
+/* --- Double-click-to-edit view wrapper (rr-text-view-editable) --- */
+.rr-text-view-editable {
+	cursor: text;
+}

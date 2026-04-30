@@ -15,6 +15,7 @@ Shared visual CSS classes (prefix `rr-`) used across all rimir plugins. Provides
 * ''Badges'' — circular and rectangular pill badges
 * ''Settings hub layout'' — sidebar + content panel classes for core-hook
 * ''Text editor'' — reusable `rr-text-editor` template with EditorToolbar shortcuts (bold, italic, headings, autolist if installed) and Ctrl+Enter to leave edit mode
+* ''Double-click-to-edit'' — companion `rr-text-view-editable` template wraps a view-mode transclude in an `$eventcatcher` that flips a caller-supplied `editState` to `"yes"` on dblclick
 * ''Utilities'' — muted, mono, nowrap, small helper classes
 
 !! Prerequisites
@@ -144,6 +145,22 @@ Caller passes parameters via `<$let>`:
 ```
 
 Internally renders toolbar children inside `<$edit-text>` so TW's framed editor engine binds shortcuts; the toolbar itself is hidden via `.rr-text-editor-host > .tc-editor-toolbar { display: none }`. Style the visible iframe via `<<wrapClass>> iframe.tc-edit-texteditor`.
+
+!!! Double-click-to-edit
+
+Companion template `$:/plugins/rimir/theme/rr-text-view-editable` wraps a block-mode transclude in an `<$eventcatcher>` that sets a caller-supplied `editState` tiddler to `"yes"` on double-click — pairs with `rr-text-editor` so the same `editState` flips both directions (dblclick → enter, Ctrl+Enter → leave).
+
+|!Variable |!Purpose |
+|`editState` |State tiddler set to `"yes"` on dblclick |
+|`viewTiddler` |(Optional) tiddler to transclude. If unset, uses surrounding `<$tiddler>`/currentTiddler context |
+
+```
+<$let editState=<<myEditState>> viewTiddler=<<myNote>>>
+<$transclude $tiddler="$:/plugins/rimir/theme/rr-text-view-editable" $mode="block"/>
+</$let>
+```
+
+Adds class `rr-text-view-editable` (with `cursor: text`) to the wrapper div.
 
 !!! Utilities
 

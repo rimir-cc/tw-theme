@@ -121,6 +121,24 @@ Wraps `<$edit-text>` with EditorToolbar children so the framed editor engine bin
 
 The toolbar is hidden via `.rr-text-editor-host > .tc-editor-toolbar { display: none }` (added in this plugin). Shortcuts still fire because TW core's `framed.js` engine looks them up via `querySelectorAll("[data-tw-keyboard-shortcut]")` regardless of CSS visibility. Style the visible iframe via your `<<wrapClass>> iframe.tc-edit-texteditor` selector — the inner textarea is inside the iframe and not directly stylable from outside.
 
+!! Double-click-to-edit
+
+Template: `$:/plugins/rimir/theme/rr-text-view-editable`
+
+Companion to `rr-text-editor`. Wraps a block-mode transclude in an `<$eventcatcher>` whose `$dblclick` sets the caller's `editState` tiddler to `"yes"`. Use it where the host already has an edit/view toggle so users get a discoverable gesture in addition to any toggle button.
+
+|!Variable (via `<$let>`) |!Description |
+|`editState` |State tiddler the `$dblclick` action sets to `"yes"` |
+|`viewTiddler` |(Optional) tiddler to render in block mode. If blank, uses the surrounding `<$tiddler>`/currentTiddler context |
+
+```
+<$let editState=<<noteEditState>> viewTiddler=<<activeNote>>>
+<$transclude $tiddler="$:/plugins/rimir/theme/rr-text-view-editable" $mode="block"/>
+</$let>
+```
+
+Renders as `<div class="rr-text-view-editable tc-eventcatcher">…</div>`. The class adds a subtle `cursor: text` hint; restyle by overriding the rule in your plugin.
+
 !! Utilities
 
 |!Class |!Purpose |

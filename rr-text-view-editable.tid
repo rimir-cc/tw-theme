@@ -1,0 +1,18 @@
+created: 20260430101717000
+modified: 20260430101717000
+title: $:/plugins/rimir/theme/rr-text-view-editable
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!-- Caller passes editState via <$let> (required) and optionally viewTiddler.
+     When viewTiddler is set, that tiddler is transcluded; otherwise the
+     surrounding <$tiddler>/currentTiddler context is used.
+     Double-clicking sets editState to "yes" so the host can render rr-text-editor. -->
+<$eventcatcher tag="div" class="rr-text-view-editable" $dblclick="""<$action-setfield $tiddler=<<editState>> text="yes"/>""">
+<%if [<viewTiddler>!is[blank]] %>
+<$transclude $tiddler=<<viewTiddler>> $mode="block"/>
+<%else%>
+<$transclude $mode="block"/>
+<%endif%>
+</$eventcatcher>
