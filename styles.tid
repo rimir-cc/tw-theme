@@ -361,3 +361,15 @@ type: text/vnd.tiddlywiki
 	text-align: center;
 	color: <<colour muted-foreground>>;
 }
+
+/* --- Shared rich-text editor (rr-text-editor) ---
+   Toolbar children are rendered inside <$edit-text> only to bind
+   keyboard shortcuts (autolist Enter/Tab/shift-Tab + Ctrl+Enter to
+   leave edit mode). The toolbar itself stays hidden — shortcuts still
+   fire because querySelectorAll finds the elements regardless. */
+.rr-text-editor-host > .tc-editor-toolbar {
+	display: none;
+}
+.rr-text-editor-btn-hidden {
+	display: none;
+}

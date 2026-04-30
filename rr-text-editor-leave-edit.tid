@@ -1,0 +1,13 @@
+created: 20260429120000000
+modified: 20260429120000000
+title: $:/plugins/rimir/theme/rr-text-editor/leave-edit
+tags: $:/tags/EditorToolbar
+type: text/vnd.tiddlywiki
+button-classes: rr-text-editor-btn-hidden
+condition: [<editState>!is[blank]]
+shortcuts: ctrl+Enter
+caption: Leave edit mode
+description: Leave edit mode
+icon: $:/core/images/done-button
+
+<$action-setfield $tiddler=<<editState>> text=""/>

@@ -102,6 +102,25 @@ Template: `$:/plugins/rimir/theme/notice`
 |`rr-settings-header` |Plugin header (icon + name + desc) |
 |`rr-settings-info-card` |Dashed fallback card |
 
+!! Text Editor
+
+Template: `$:/plugins/rimir/theme/rr-text-editor`
+
+Wraps `<$edit-text>` with EditorToolbar children so the framed editor engine binds keyboard shortcuts (bold, italic, headings, autolist if `sq/editor-autolist` is installed). Adds a hidden ''leave edit mode'' toolbar item bound to Ctrl+Enter that clears the caller's edit-state tiddler.
+
+|!Variable (via `<$let>`) |!Description |
+|`editTiddler` |Title of the tiddler whose `text` field is being edited |
+|`editState` |State tiddler that gates edit mode (cleared on Ctrl+Enter) |
+|`wrapClass` |CSS class for the outer wrapper div (consumer-supplied, controls width/height) |
+
+```
+<$let editTiddler=<<myNote>> editState="$:/state/my-edit" wrapClass="my-editor">
+<$transclude $tiddler="$:/plugins/rimir/theme/rr-text-editor"/>
+</$let>
+```
+
+The toolbar is hidden via `.rr-text-editor-host > .tc-editor-toolbar { display: none }` (added in this plugin). Shortcuts still fire because TW core's `framed.js` engine looks them up via `querySelectorAll("[data-tw-keyboard-shortcut]")` regardless of CSS visibility. Style the visible iframe via your `<<wrapClass>> iframe.tc-edit-texteditor` selector — the inner textarea is inside the iframe and not directly stylable from outside.
+
 !! Utilities
 
 |!Class |!Purpose |

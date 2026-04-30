@@ -1,0 +1,19 @@
+created: 20260429120000000
+modified: 20260429120000000
+title: $:/plugins/rimir/theme/rr-text-editor
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+<!-- Caller passes editTiddler, editState, wrapClass via <$let> -->
+<div class=<<wrapClass>>>
+<div class="rr-text-editor-host">
+<$edit-text tiddler=<<editTiddler>> field="text" class="tc-edit-texteditor">
+<$set name="targetTiddler" value=<<editTiddler>>>
+<$list filter="[all[shadows+tiddlers]tag[$:/tags/EditorToolbar]!has[draft.of]]">
+<$transclude tiddler="$:/core/ui/EditTemplate/body/toolbar/button" mode="inline"/>
+</$list>
+</$set>
+</$edit-text>
+</div>
+</div>
