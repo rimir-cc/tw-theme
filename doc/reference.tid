@@ -108,10 +108,13 @@ Template: `$:/plugins/rimir/theme/rr-text-editor`
 
 Wraps `<$edit-text>` with EditorToolbar children so the framed editor engine binds keyboard shortcuts (bold, italic, headings, autolist if `sq/editor-autolist` is installed). Adds a hidden ''leave edit mode'' toolbar item bound to Ctrl+Enter that clears the caller's edit-state tiddler.
 
-|!Variable (via `<$let>`) |!Description |
-|`editTiddler` |Title of the tiddler whose `text` field is being edited |
-|`editState` |State tiddler that gates edit mode (cleared on Ctrl+Enter) |
-|`wrapClass` |CSS class for the outer wrapper div (consumer-supplied, controls width/height) |
+|!Variable (via `<$let>`) |!Required |!Description |
+|`editTiddler` |Yes |Title of the tiddler whose `text` field is being edited |
+|`editState` |Yes |State tiddler that gates edit mode (cleared on Ctrl+Enter) |
+|`wrapClass` |Yes |CSS class for the outer wrapper div (consumer-supplied, controls width/height) |
+|`editAutoFocus` |No |`"yes"` to auto-focus the textarea on mount; default `"no"` |
+|`editFocusSelectFromStart` |No |Forwarded to `$edit-text focusSelectFromStart`; default `99999` (past end → no selection) |
+|`editFocusSelectFromEnd` |No |Forwarded to `$edit-text focusSelectFromEnd`; default `0` (caret at end) |
 
 ```
 <$let editTiddler=<<myNote>> editState="$:/state/my-edit" wrapClass="my-editor">
@@ -138,6 +141,22 @@ Companion to `rr-text-editor`. Wraps a block-mode transclude in an `<$eventcatch
 ```
 
 Renders as `<div class="rr-text-view-editable tc-eventcatcher">…</div>`. The class adds a subtle `cursor: text` hint; restyle by overriding the rule in your plugin.
+
+The dblclick handler fires `<$action-clear-selection>` before flipping `editState` so the browser's word-selection is wiped — otherwise the new textarea mounts with the matching range still highlighted blue.
+
+!! `<$action-clear-selection>`
+
+Action widget that wipes the document's text selection by calling `window.getSelection().removeAllRanges()`. Useful in action sequences that swap a rendered view for an editor (where a stale `Selection` would carry into the new field) or wherever a button-driven flow needs a clean slate.
+
+```
+<$button>
+<$action-clear-selection/>
+<$action-setfield $tiddler="$:/state/edit" text="yes"/>
+Edit
+</$button>
+```
+
+No-op when `window.getSelection` is unavailable (e.g. server rendering).
 
 !! Utilities
 

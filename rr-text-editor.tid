@@ -5,10 +5,14 @@ type: text/vnd.tiddlywiki
 
 \whitespace trim
 
-<!-- Caller passes editTiddler, editState, wrapClass via <$let> -->
+<!-- Caller passes editTiddler, editState, wrapClass via <$let>.
+     Optional: editAutoFocus="yes" auto-focuses the textarea on mount.
+     editFocusSelectFromStart / editFocusSelectFromEnd control caret/selection
+     (defaults: 99999 / 0 → cursor at end, no selection). -->
+<$let editAutoFocus={{{ [<editAutoFocus>!is[blank]] ~[[no]] }}} editFocusSelectFromStart={{{ [<editFocusSelectFromStart>!is[blank]] ~[[99999]] }}} editFocusSelectFromEnd={{{ [<editFocusSelectFromEnd>!is[blank]] ~[[0]] }}}>
 <div class=<<wrapClass>>>
 <div class="rr-text-editor-host">
-<$edit-text tiddler=<<editTiddler>> field="text" class="tc-edit-texteditor">
+<$edit-text tiddler=<<editTiddler>> field="text" class="tc-edit-texteditor" focus=<<editAutoFocus>> focusSelectFromStart=<<editFocusSelectFromStart>> focusSelectFromEnd=<<editFocusSelectFromEnd>>>
 <$set name="targetTiddler" value=<<editTiddler>>>
 <$list filter="[all[shadows+tiddlers]tag[$:/tags/EditorToolbar]!has[draft.of]]">
 <$transclude tiddler="$:/core/ui/EditTemplate/body/toolbar/button" mode="inline"/>
@@ -17,3 +21,4 @@ type: text/vnd.tiddlywiki
 </$edit-text>
 </div>
 </div>
+</$let>

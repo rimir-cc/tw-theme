@@ -133,10 +133,13 @@ Use the template `$:/plugins/rimir/theme/rr-text-editor` for an `<$edit-text>`-b
 
 Caller passes parameters via `<$let>`:
 
-|!Variable |!Purpose |
-|`editTiddler` |Title of the tiddler whose `text` field is being edited |
-|`editState` |State tiddler that gates edit mode (cleared on Ctrl+Enter) |
-|`wrapClass` |CSS class for the outer wrapper div (controls width, height, etc.) |
+|!Variable |!Required |!Purpose |
+|`editTiddler` |Yes |Title of the tiddler whose `text` field is being edited |
+|`editState` |Yes |State tiddler that gates edit mode (cleared on Ctrl+Enter) |
+|`wrapClass` |Yes |CSS class for the outer wrapper div (controls width, height, etc.) |
+|`editAutoFocus` |No |`"yes"` to auto-focus the textarea on mount (default `"no"`) |
+|`editFocusSelectFromStart` |No |Selection-start offset on auto-focus (default `99999` → past end → no selection) |
+|`editFocusSelectFromEnd` |No |Selection-end offset on auto-focus (default `0` → caret at end) |
 
 ```
 <$let editTiddler=<<myNote>> editState="$:/state/my-edit" wrapClass="my-editor">
@@ -148,7 +151,7 @@ Internally renders toolbar children inside `<$edit-text>` so TW's framed editor 
 
 !!! Double-click-to-edit
 
-Companion template `$:/plugins/rimir/theme/rr-text-view-editable` wraps a block-mode transclude in an `<$eventcatcher>` that sets a caller-supplied `editState` tiddler to `"yes"` on double-click — pairs with `rr-text-editor` so the same `editState` flips both directions (dblclick → enter, Ctrl+Enter → leave).
+Companion template `$:/plugins/rimir/theme/rr-text-view-editable` wraps a block-mode transclude in an `<$eventcatcher>` that sets a caller-supplied `editState` tiddler to `"yes"` on double-click — pairs with `rr-text-editor` so the same `editState` flips both directions (dblclick → enter, Ctrl+Enter → leave). Before flipping the state it fires `<$action-clear-selection>` so the dblclick word-selection is wiped — otherwise the new textarea would mount with the matching range still highlighted blue.
 
 |!Variable |!Purpose |
 |`editState` |State tiddler set to `"yes"` on dblclick |
@@ -161,6 +164,18 @@ Companion template `$:/plugins/rimir/theme/rr-text-view-editable` wraps a block-
 ```
 
 Adds class `rr-text-view-editable` (with `cursor: text`) to the wrapper div.
+
+!!! `<$action-clear-selection>`
+
+Action widget that calls `window.getSelection().removeAllRanges()`. Drop it into any action sequence that needs to wipe a stray browser text-selection (e.g. before swapping a rendered view for an editor). Used internally by `rr-text-view-editable`; usable directly anywhere actions run.
+
+```
+<$button>
+<$action-clear-selection/>
+<$action-setfield $tiddler="$:/state/edit" text="yes"/>
+Edit
+</$button>
+```
 
 !!! Utilities
 

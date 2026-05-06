@@ -9,7 +9,7 @@ type: text/vnd.tiddlywiki
      When viewTiddler is set, that tiddler is transcluded; otherwise the
      surrounding <$tiddler>/currentTiddler context is used.
      Double-clicking sets editState to "yes" so the host can render rr-text-editor. -->
-<$eventcatcher tag="div" class="rr-text-view-editable" $dblclick="""<$action-setfield $tiddler=<<editState>> text="yes"/>""">
+<$eventcatcher tag="div" class="rr-text-view-editable" $dblclick="""<$action-clear-selection/><$action-setfield $tiddler=<<editState>> text="yes"/>""">
 <%if [<viewTiddler>!is[blank]] %>
 <$transclude $tiddler=<<viewTiddler>> $mode="block"/>
 <%else%>
