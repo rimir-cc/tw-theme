@@ -1,0 +1,71 @@
+title: $:/plugins/rimir/theme/test/test-procedures-settings
+description: Settings procedures + rr-display-label render expected markup
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: $:/plugins/rimir/theme/procedures-settings
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+\function rr-display-label(t) [<t>get[caption]] ~[<t>get[abbrev]] ~[<t>]
+
+\procedure rr-settings-section(title, hint:"")
+<section class="rr-settings-section">
+<h3 class="rr-settings-section-title"><$text text=<<title>>/></h3>
+<$list filter="[<hint>!is[blank]]" variable="ignore"><p class="rr-settings-section-hint"><$text text=<<hint>>/></p></$list>
+<$slot $name="body"/>
+</section>
+\end
+
+\procedure rr-settings-row(label, hint:"")
+<div class="rr-settings-row">
+<div class="rr-settings-row-label"><$text text=<<label>>/></div>
+<div class="rr-settings-row-control"><$slot $name="body"/></div>
+<$list filter="[<hint>!is[blank]]" variable="ignore"><div class="rr-settings-row-hint"><$text text=<<hint>>/></div></$list>
+</div>
+\end
+
+\procedure rr-callout(kind:"info")
+<div class={{{ [[rr-callout rr-callout-]addsuffix<kind>] }}}>
+<div class="rr-callout-label"><$text text={{{ [<kind>uppercase[]] }}}/></div>
+<$slot $name="body"/>
+</div>
+\end
+
++
+title: TidCap
+caption: My Caption
+abbrev: MA
+
++
+title: TidAbbrev
+abbrev: AA
+
++
+title: TidBare
+
++
+title: Output
+
+\whitespace trim
+\import $:/plugins/rimir/theme/procedures-settings
+labels:[<<rr-display-label TidCap>>][<<rr-display-label TidAbbrev>>][<<rr-display-label TidBare>>]
+<$transclude $variable="rr-settings-section" title="S1" hint="hint text">
+<$fill $name="body">
+<$transclude $variable="rr-settings-row" label="Label A" hint="row hint">
+<$fill $name="body">CONTROL</$fill>
+</$transclude>
+</$fill>
+</$transclude>
+<$transclude $variable="rr-callout" kind="warn">
+<$fill $name="body">careful</$fill>
+</$transclude>
++
+title: ExpectedResult
+
+<p>labels:[My Caption][AA][TidBare]<section class="rr-settings-section"><h3 class="rr-settings-section-title">S1</h3><p class="rr-settings-section-hint">hint text</p><div class="rr-settings-row"><div class="rr-settings-row-label">Label A</div><div class="rr-settings-row-control">CONTROL</div><div class="rr-settings-row-hint">row hint</div></div></section><div class="rr-callout rr-callout-warn"><div class="rr-callout-label">WARN</div>careful</div></p>
++
+title: Narrative
+
+Verifies the published procedures-settings.tid file content renders expected CSS classes. rr-display-label falls back caption → abbrev → title.

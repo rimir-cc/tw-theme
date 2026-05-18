@@ -1,0 +1,98 @@
+title: $:/plugins/rimir/theme/procedures-settings
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+
+\* Shared procedures + function for settings panels. Imported via \import
+\* by plugin settings.tid files in Phase 3. Phase 0 just declares the surface;
+\* no existing settings panels use these yet.
+\*
+\* Conventions:
+\* - All emit CSS classes only — no inline styles.
+\* - Heavy panels split via <<rr-settings-tabs>> with state at
+\*   $:/state/rimir/<plugin>/settings-tab.
+\* - Diagnostic / debug content wraps in <<rr-advanced-reveal>>.
+
+\function rr-display-label(t) [<t>get[caption]] ~[<t>get[abbrev]] ~[<t>]
+
+\procedure rr-plugin-summary(name, version, doc-link:"", status-bullets:"")
+<div class="rr-plugin-summary">
+<div class="rr-plugin-summary-head">
+<span class="rr-plugin-summary-name"><$text text=<<name>>/></span>
+<$list filter="[<version>!is[blank]]" variable="ignore"><span class="rr-plugin-summary-version">v<$text text=<<version>>/></span></$list>
+</div>
+<$list filter="[<doc-link>!is[blank]]" variable="ignore"><div class="rr-plugin-summary-doc"><$link to=<<doc-link>>>Documentation</$link></div></$list>
+<$list filter="[<status-bullets>!is[blank]]" variable="ignore"><div class="rr-plugin-summary-status"><$text text=<<status-bullets>>/></div></$list>
+</div>
+\end
+
+\procedure rr-settings-section(title, hint:"")
+<section class="rr-settings-section">
+<h3 class="rr-settings-section-title"><$text text=<<title>>/></h3>
+<$list filter="[<hint>!is[blank]]" variable="ignore"><p class="rr-settings-section-hint"><$text text=<<hint>>/></p></$list>
+<$slot $name="body"/>
+</section>
+\end
+
+\procedure rr-settings-subsection(title)
+<div class="rr-settings-subsection">
+<h4 class="rr-settings-subsection-title"><$text text=<<title>>/></h4>
+<$slot $name="body"/>
+</div>
+\end
+
+\procedure rr-settings-row(label, hint:"")
+<div class="rr-settings-row">
+<div class="rr-settings-row-label"><$text text=<<label>>/></div>
+<div class="rr-settings-row-control"><$slot $name="body"/></div>
+<$list filter="[<hint>!is[blank]]" variable="ignore"><div class="rr-settings-row-hint"><$text text=<<hint>>/></div></$list>
+</div>
+\end
+
+\procedure rr-config-input(tid, default:"", placeholder:"")
+<$edit-text tiddler=<<tid>> tag="input" class="rr-input rr-config-input" default=<<default>> placeholder=<<placeholder>>/>
+\end
+
+\procedure rr-config-textarea(tid, default:"", placeholder:"", rows:"4")
+<$edit-text tiddler=<<tid>> tag="textarea" class="rr-input rr-config-textarea" default=<<default>> placeholder=<<placeholder>> rows=<<rows>>/>
+\end
+
+\procedure rr-config-checkbox(tid, label, default:"no")
+<label class="rr-config-checkbox">
+<$checkbox tiddler=<<tid>> field="text" checked="yes" unchecked="no" default=<<default>>/>
+<span class="rr-config-checkbox-label"><$text text=<<label>>/></span>
+</label>
+\end
+
+\procedure rr-callout(kind:"info")
+<div class={{{ [[rr-callout rr-callout-]addsuffix<kind>] }}}>
+<div class="rr-callout-label"><$text text={{{ [<kind>uppercase[]] }}}/></div>
+<$slot $name="body"/>
+</div>
+\end
+
+\procedure rr-settings-tabs(plugin-key, tabs)
+<div class="rr-settings-tabs">
+<div class="rr-settings-tabs-strip">
+<$list filter=<<tabs>> variable="tab-id">
+<$button class={{{ [<plugin-key>addprefix[$:/state/rimir/]addsuffix[/settings-tab]get[text]match<tab-id>then[rr-settings-tab rr-settings-tab-active]else[rr-settings-tab]] }}}>
+<$action-setfield $tiddler={{{ [<plugin-key>addprefix[$:/state/rimir/]addsuffix[/settings-tab]] }}} text=<<tab-id>>/>
+<$text text=<<tab-id>>/>
+</$button>
+</$list>
+</div>
+<div class="rr-settings-tabs-body"><$slot $name="body"/></div>
+</div>
+\end
+
+\procedure rr-advanced-reveal(state, label:"Advanced")
+<div class="rr-advanced-reveal">
+<$reveal type="nomatch" state=<<state>> text="yes" tag="div" class="rr-advanced-reveal-header">
+<$button set=<<state>> setTo="yes" class="rr-advanced-reveal-toggle">▸ <$text text=<<label>>/></$button>
+</$reveal>
+<$reveal type="match" state=<<state>> text="yes" tag="div" class="rr-advanced-reveal-body">
+<$button set=<<state>> setTo="no" class="rr-advanced-reveal-toggle">▾ <$text text=<<label>>/></$button>
+<$slot $name="body"/>
+</$reveal>
+</div>
+\end

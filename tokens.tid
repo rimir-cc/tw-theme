@@ -1,0 +1,28 @@
+title: $:/plugins/rimir/theme/tokens
+tags: [[$:/tags/Stylesheet]]
+type: text/vnd.tiddlywiki
+
+:root {
+	/* z-index scale — verified ceiling: TW's AdvancedPerformance footer is 999999.
+	   Use these tokens via `z-index: var(--rr-z-...);` instead of literal numbers.
+	   Cytoscape's cluster.js sets z-index from JS (1001); CSS tokens don't reach
+	   inline JS styles — that one stays as-is. */
+	--rr-z-dropdown:        100;
+	--rr-z-popup:           200;
+	--rr-z-modal-backdrop:  900;
+	--rr-z-modal:          1000;
+	--rr-z-modal-top:      1100;
+	--rr-z-toast:          1200;
+	--rr-z-overlay-app:    9000;
+	--rr-z-overlay-top:   10000;
+	--rr-z-fullscreen:  1000000;
+
+	/* Spacing scale. Plugins migrate inline px literals to these in Phase 2. */
+	--rr-spacing-0: 2px;
+	--rr-spacing-1: 4px;
+	--rr-spacing-2: 8px;
+	--rr-spacing-3: 12px;
+	--rr-spacing-4: 16px;
+	--rr-spacing-5: 20px;
+	--rr-spacing-6: 24px;
+}
